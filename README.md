@@ -28,6 +28,46 @@ This project implements a Model Predictive Controller (MPC) to control a car in 
     Some function signatures have changed in v0.14.x. See [this PR](https://github.com/udacity/CarND-MPC-Project/pull/3) for more details.
 
 * **Ipopt and CppAD:** Please refer to [this document](https://github.com/udacity/CarND-MPC-Project/blob/master/install_Ipopt_CppAD.md) for installation instructions.
+  * Here is the instructions to install them from the source on my Mac (should also work on Linux but not verified).
+
+  ```
+  # ipopt install instructions
+  wget http://www.coin-or.org/download/source/Ipopt/Ipopt-3.12.7.tgz
+  tar xvzf Ipopt-3.12.7.tgz
+  # Download 3rd party dependencies
+  cd Ipopt-3.12.7/ThirdParty/Blas
+  ./get.Blas
+  cd ../Lapack
+  ./get.Lapack
+  cd ../Mumps
+  ./get.Mumps
+  cd ../Metis
+  ./get.Metis
+  # Download MA27 solver from http://www.hsl.rl.ac.uk/ipopt/ and put it into place
+  cd ../HSL/
+  tar xvzf ~/Downloads/coinhsl-2014.01.10.tar.gz
+  mv coinhsl-2014.01.10 coinhsl
+  # Configure, build and install
+  cd ../..
+  mkdir build
+  cd build
+  ../configure --prefix=/opt/local
+  make -j4
+  sudo make install
+  #Its header files and libs should be installed at /opt/local/include/coin/ and /opt/local/lib/ respectively now.
+  ```
+
+  ```
+  # cppAD install instructions
+  wget https://www.coin-or.org/download/source/CppAD/cppad-20171201.gpl.tgz
+  tar xvzf cppad-20171201.gpl.tgz
+  cd cppad-20171201
+  mkdir build && cd build
+  cmake -Dcppad_prefix=/opt/local -Dcmake_install_includedirs=include -Dcppad_postfix=coin -Dcppad_cxx_flags="-Wall -ansi -pedantic-errors -std=c++11 -Wshadow" -Deigin_prefix=/opt/local -Dipopt_prefix=/opt/local ../
+  sudo make install
+  #Its header files and lib should be installed at /opt/local/include/coin/ and /opt/local/lib/coin/ respectively now.
+  ```
+
 * [Eigen](http://eigen.tuxfamily.org/index.php?title=Main_Page). This is already part of the repo so you shouldn't have to worry about it.
 * Simulator. You can download these from the [releases tab](https://github.com/udacity/self-driving-car-sim/releases).
 * Not a dependency but read the [DATA.md](./DATA.md) for a description of the data sent back from the simulator.
